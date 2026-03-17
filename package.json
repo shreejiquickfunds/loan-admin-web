@@ -6,7 +6,7 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "seed": "node seed.js",
-    "build": "cd loan-web && npm install && npm run build",
+    "build": "npm install --prefix loan-web && npm run build --prefix loan-web",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
