@@ -3,6 +3,7 @@ import API from '../api/axios';
 import FileTable from '../components/FileTable';
 import AddFileModal from '../components/AddFileModal';
 import { FiPlus, FiSearch, FiFilter } from 'react-icons/fi';
+import { useAuth } from '../context/AuthContext';
 
 const STATUSES = ['All', 'New', 'Under Review', 'Under Process', 'Approved', 'Rejected', 'Completed'];
 
@@ -12,6 +13,7 @@ const Files = () => {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('All');
   const [showAddModal, setShowAddModal] = useState(false);
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     fetchFiles();
@@ -40,6 +42,18 @@ const Files = () => {
 
   const handleFileAdded = (newFile) => {
     setFiles([newFile, ...files]);
+  };
+
+  const handleDeleteFile = async (fileId) => {
+    if (!window.confirm("Are you sure you want to delete this file? This action cannot be undone.")) return;
+    
+    try {
+      await API.delete(`/files/${fileId}`);
+      setFiles(files.filter(f => f._id !== fileId));
+    } catch (err) {
+      console.error('Failed to delete file', err);
+      alert('Error deleting file. ' + (err.response?.data?.message || ''));
+    }
   };
 
   return (
@@ -89,7 +103,7 @@ const Files = () => {
         <span>Showing <strong>{files.length}</strong> files</span>
       </div>
 
-      <FileTable files={files} loading={loading} />
+      <FileTable files={files} loading={loading} onDeleteFile={isAdmin ? handleDeleteFile : null} />
 
       <AddFileModal
         isOpen={showAddModal}

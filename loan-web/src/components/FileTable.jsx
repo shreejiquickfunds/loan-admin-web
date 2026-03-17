@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import StatusBadge from './StatusBadge';
-import { FiEye, FiCalendar, FiUser } from 'react-icons/fi';
+import { FiEye, FiCalendar, FiUser, FiTrash2 } from 'react-icons/fi';
 
-const FileTable = ({ files, loading }) => {
+const FileTable = ({ files, loading, onDeleteFile }) => {
   const navigate = useNavigate();
 
   if (loading) {
@@ -71,9 +71,20 @@ const FileTable = ({ files, loading }) => {
                 </div>
               </td>
               <td>
-                <button className="btn btn-icon" onClick={(e) => { e.stopPropagation(); navigate(`/admin/files/${file._id}`); }}>
-                  <FiEye /> View
-                </button>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button className="btn btn-icon" onClick={(e) => { e.stopPropagation(); navigate(`/admin/files/${file._id}`); }}>
+                    <FiEye /> View
+                  </button>
+                  {onDeleteFile && (
+                    <button 
+                      className="btn btn-icon" 
+                      style={{ color: '#dc3545', backgroundColor: '#fdf3f4', borderColor: '#fbc2c4' }}
+                      onClick={(e) => { e.stopPropagation(); onDeleteFile(file._id); }}
+                    >
+                      <FiTrash2 /> Delete
+                    </button>
+                  )}
+                </div>
               </td>
             </tr>
           ))}

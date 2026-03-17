@@ -4,14 +4,14 @@ import API from '../api/axios';
 import { useAuth } from '../context/AuthContext';
 import Timeline from '../components/Timeline';
 import StatusBadge from '../components/StatusBadge';
-import { FiArrowLeft, FiEdit3, FiUser, FiCalendar, FiHash, FiCreditCard } from 'react-icons/fi';
+import { FiArrowLeft, FiEdit3, FiUser, FiCalendar, FiHash, FiCreditCard, FiTrash2 } from 'react-icons/fi';
 
 const STATUSES = ['New', 'Under Review', 'Under Process', 'Approved', 'Rejected', 'Completed'];
 
 const FileDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [updateStatus, setUpdateStatus] = useState('');
@@ -31,6 +31,18 @@ const FileDetail = () => {
       console.error('Failed to fetch file', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDeleteFile = async () => {
+    if (!window.confirm("Are you sure you want to delete this file? This action cannot be undone.")) return;
+    
+    try {
+      await API.delete(`/files/${id}`);
+      navigate('/admin/files');
+    } catch (err) {
+      console.error('Failed to delete file', err);
+      alert('Error deleting file. ' + (err.response?.data?.message || ''));
     }
   };
 
@@ -75,9 +87,20 @@ const FileDetail = () => {
 
   return (
     <div className="file-detail-page">
-      <button className="btn btn-ghost back-btn" onClick={() => navigate('/admin/files')}>
-        <FiArrowLeft /> Back to Files
-      </button>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <button className="btn btn-ghost back-btn" onClick={() => navigate('/admin/files')}>
+          <FiArrowLeft /> Back to Files
+        </button>
+        {isAdmin && (
+          <button 
+            className="btn" 
+            style={{ color: '#dc3545', backgroundColor: '#fdf3f4', borderColor: '#fbc2c4' }}
+            onClick={handleDeleteFile}
+          >
+            <FiTrash2 /> Delete File
+          </button>
+        )}
+      </div>
 
       <div className="detail-grid">
         {/* File Info Card */}
