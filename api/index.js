@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const connectDB = require('../config/db');
+require("dotenv").config();
 
 // Load env vars
 require('dotenv').config();
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use('/api/auth', require('../routes/auth'));
 app.use('/api/users', require('../routes/users'));
 app.use('/api/files', require('../routes/files'));
+app.use("/api/career", require("../routes/careerRoutes"));
 
 // Health check
 app.get('/api/health', (req, res) => {
