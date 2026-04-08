@@ -294,7 +294,7 @@ const LandingPage = () => {
       Object.entries(careerForm).forEach(([k, v]) => formData.append(k, v));
       formData.append('resume', resumeFile);
 
-      const res = await fetch('http://localhost:5000/api/career', {
+      const res = await fetch('https://loan-admin-web.vercel.app/api/career', {
         method: 'POST',
         body:   formData,
       });
