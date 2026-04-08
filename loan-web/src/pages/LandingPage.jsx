@@ -135,14 +135,6 @@ const POSITIONS = ['Loan Officer', 'Relationship Manager', 'Credit Analyst', 'Br
 
 const EXPERIENCE_LEVELS = ['Fresher (0 years)', '1–2 years', '3–5 years', '5–10 years', '10+ years'];
 
-const PERKS = [
-  { icon: '📈', title: 'Clear Growth Path',       desc: 'Fast-track your career with mentorship, training, and structured promotions.' },
-  { icon: '💰', title: 'Competitive Compensation', desc: 'Industry-best salary with performance bonuses and quarterly incentives.' },
-  { icon: '🤝', title: 'Inclusive Culture',        desc: 'A respectful, diverse workplace where every voice is heard and valued.' },
-  { icon: '🏥', title: 'Health Benefits',          desc: 'Comprehensive medical insurance coverage for you and your entire family.' },
-  { icon: '⏰', title: 'Work-Life Balance',        desc: 'Flexible hours and understanding management that respects your personal life.' },
-  { icon: '🎯', title: 'Impactful Work',           desc: 'Directly help thousands of customers achieve life-changing financial goals.' },
-];
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Reusable SVG arrow icon
@@ -352,7 +344,6 @@ const LandingPage = () => {
 
           {/* Brand */}
           <a href="/" className="nav-brand" aria-label="Shree Ji QuickFunds — Home">
-            <span className="brand-icon" aria-hidden="true">🏦</span>
             <span className="brand-text">
               Shree Ji&nbsp;<span className="brand-highlight">QuickFunds</span>
             </span>
@@ -410,10 +401,7 @@ const LandingPage = () => {
 
           {/* Left: copy */}
           <div className="hero-content">
-            <div className="hero-tag">
-              <span className="hero-tag-dot" aria-hidden="true">✦</span>
-              Trusted by 5,000+ Customers Across Rajasthan
-            </div>
+          
 
             <h1 className="hero-title">
               Fast &amp; Reliable<br />
@@ -519,22 +507,10 @@ const LandingPage = () => {
                 <div className="service-content">
                   <h3>{title}</h3>
                   <p>{desc}</p>
-                  <button
-                    className="service-apply-btn"
-                    onClick={() => scrollTo('contact')}
-                    aria-label={`Apply for ${title}`}
-                  >
-                    Apply Now <ArrowIcon size={13} style={{ marginLeft: 2 }} />
-                  </button>
+
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className="services-more">
-            <button onClick={() => scrollTo('contact')} className="view-more-btn">
-              Get a Custom Quote <ArrowIcon />
-            </button>
           </div>
         </div>
       </section>
@@ -778,23 +754,6 @@ const LandingPage = () => {
                 invest in our customers. Every role carries real impact, a clear growth path,
                 and a culture built on trust, transparency, and shared success.
               </p>
-
-              {/* Perks Grid */}
-              <div className="careers-perks" role="list">
-                {PERKS.map(({ icon, title, desc }, i) => (
-                  <div
-                    className={`perk-item anim-on-scroll anim-delay-${(i % 4) + 1}`}
-                    key={title}
-                    role="listitem"
-                  >
-                    <div className="perk-icon" aria-hidden="true">{icon}</div>
-                    <div>
-                      <h4>{title}</h4>
-                      <p>{desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
 
@@ -977,7 +936,7 @@ const LandingPage = () => {
                     Submitting…
                   </>
                 ) : (
-                  'Submit Application ✉️'
+                  'Submit Application'
                 )}
               </button>
             </form>
