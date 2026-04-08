@@ -5,7 +5,7 @@ const { Resend } = require("resend");
 
 const router = express.Router();
 
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ dest: "/tmp" });
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
