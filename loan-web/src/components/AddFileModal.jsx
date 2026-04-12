@@ -15,6 +15,7 @@ const LOAN_TYPES = [
 const AddFileModal = ({ isOpen, onClose, onFileAdded }) => {
   const { user } = useAuth();
   const [formData, setFormData] = useState({
+    fileNumber: '',
     applicantName: '',
     loanType: '',
     assignedTo: '',
@@ -46,7 +47,7 @@ const AddFileModal = ({ isOpen, onClose, onFileAdded }) => {
     try {
       const { data } = await API.post('/files', formData);
       onFileAdded(data);
-      setFormData({ applicantName: '', loanType: '', assignedTo: '' });
+      setFormData({ fileNumber: '', applicantName: '', loanType: '', assignedTo: '' });
       onClose();
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create file');
@@ -70,6 +71,22 @@ const AddFileModal = ({ isOpen, onClose, onFileAdded }) => {
         {error && <div className="alert alert-error">{error}</div>}
 
         <form onSubmit={handleSubmit} className="modal-form">
+          <div className="form-group">
+            <label htmlFor="fileNumber">MCF ID / File Number <span style={{ color: 'var(--ruby-400)' }}>*</span></label>
+            <input
+              type="text"
+              id="fileNumber"
+              value={formData.fileNumber}
+              onChange={(e) => setFormData({ ...formData, fileNumber: e.target.value })}
+              placeholder="e.g. MCF-2024-001"
+              required
+              style={{ textTransform: 'uppercase', fontFamily: 'monospace', letterSpacing: '0.5px' }}
+            />
+            <small style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+              Must be unique — this is the permanent identifier for this file.
+            </small>
+          </div>
+
           <div className="form-group">
             <label htmlFor="applicantName">Applicant Name</label>
             <input

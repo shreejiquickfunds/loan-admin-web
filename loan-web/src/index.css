@@ -1013,12 +1013,10 @@ select {
   flex-shrink: 0;
 }
 
-.status-dot-new           { background: var(--sapphire-400); box-shadow: 0 0 6px var(--sapphire-glow); }
-.status-dot-under-review  { background: var(--amber-400);    box-shadow: 0 0 6px var(--amber-glow); }
-.status-dot-under-process { background: var(--gold-300);     box-shadow: 0 0 6px var(--gold-glow); }
-.status-dot-approved      { background: var(--emerald-400);  box-shadow: 0 0 6px var(--emerald-glow); }
-.status-dot-rejected      { background: var(--ruby-400);     box-shadow: 0 0 6px var(--ruby-glow); }
-.status-dot-completed     { background: var(--cyan-400);     box-shadow: 0 0 6px var(--cyan-glow); }
+.status-dot-login             { background: var(--sapphire-400); box-shadow: 0 0 6px var(--sapphire-glow); }
+.status-dot-document-pending  { background: var(--amber-400);    box-shadow: 0 0 6px var(--amber-glow); }
+.status-dot-sanction          { background: var(--emerald-400);  box-shadow: 0 0 6px var(--emerald-glow); }
+.status-dot-disbursement      { background: var(--gold-300);     box-shadow: 0 0 6px var(--gold-glow); }
 
 /* ============================================================
    12. FILTERS BAR
@@ -1227,7 +1225,7 @@ select {
 }
 
 /* ============================================================
-   14. STATUS BADGES
+   14. STATUS BADGES  (4-stage pipeline)
    ============================================================ */
 .status-badge {
   display: inline-flex;
@@ -1242,40 +1240,105 @@ select {
   white-space: nowrap;
 }
 
-.status-new {
+/* Login — sapphire blue */
+.status-login {
   background: rgba(59, 130, 246, 0.12);
   color: var(--sapphire-400);
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.25);
 }
 
-.status-review {
+/* Document Pending — amber */
+.status-doc-pending {
   background: rgba(245, 158, 11, 0.12);
   color: var(--amber-400);
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(245, 158, 11, 0.25);
 }
 
-.status-process {
-  background: rgba(232, 184, 75, 0.1);
-  color: var(--gold-300);
-  border: 1px solid rgba(232, 184, 75, 0.22);
-}
-
-.status-approved {
+/* Sanction — emerald green */
+.status-sanction {
   background: rgba(16, 185, 129, 0.1);
   color: var(--emerald-400);
-  border: 1px solid rgba(16, 185, 129, 0.22);
+  border: 1px solid rgba(16, 185, 129, 0.25);
 }
 
-.status-rejected {
-  background: rgba(239, 68, 68, 0.1);
-  color: var(--ruby-400);
-  border: 1px solid rgba(239, 68, 68, 0.22);
+/* Disbursement — gold (brand accent) */
+.status-disbursement {
+  background: rgba(232, 184, 75, 0.1);
+  color: var(--gold-300);
+  border: 1px solid rgba(232, 184, 75, 0.28);
 }
 
-.status-completed {
-  background: rgba(34, 211, 238, 0.1);
-  color: var(--cyan-400);
-  border: 1px solid rgba(34, 211, 238, 0.22);
+/* ── Themed <select> dropdown ── */
+/* Native options don't support custom CSS in most browsers, so we style
+   the select element itself to match the dark theme perfectly. */
+select,
+.select-themed {
+  background-color: var(--bg-raised) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23e8b84b' d='M1 1l5 5 5-5'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 16px center !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-soft) !important;
+}
+
+select option {
+  background-color: var(--bg-raised);
+  color: var(--text-primary);
+}
+
+/* ── Pagination Bar ── */
+.pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-ghost);
+}
+
+.pagination-pages {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.pagination-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-soft);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all var(--t-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination-btn:hover {
+  background: var(--glass-gold);
+  border-color: var(--border-gold);
+  color: var(--gold-300);
+}
+
+.pagination-btn.active {
+  background: linear-gradient(135deg, var(--gold-300), var(--gold-400));
+  border-color: var(--gold-300);
+  color: var(--navy-800);
+  font-weight: 700;
+  box-shadow: 0 2px 10px var(--gold-glow);
+}
+
+.pagination-ellipsis {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  padding: 0 4px;
+  user-select: none;
 }
 
 /* ============================================================

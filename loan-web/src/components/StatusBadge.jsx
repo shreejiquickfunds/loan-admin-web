@@ -1,13 +1,11 @@
 const StatusBadge = ({ status }) => {
   const getStatusClass = () => {
     switch (status) {
-      case 'New': return 'status-new';
-      case 'Under Review': return 'status-review';
-      case 'Under Process': return 'status-process';
-      case 'Approved': return 'status-approved';
-      case 'Rejected': return 'status-rejected';
-      case 'Completed': return 'status-completed';
-      default: return 'status-new';
+      case 'Login':            return 'status-login';
+      case 'Document Pending': return 'status-doc-pending';
+      case 'Sanction':         return 'status-sanction';
+      case 'Disbursement':     return 'status-disbursement';
+      default:                 return 'status-login';
     }
   };
 

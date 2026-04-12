@@ -29,8 +29,10 @@ const timelineEventSchema = new mongoose.Schema({
 const loanFileSchema = new mongoose.Schema({
   fileNumber: {
     type: String,
-    required: true,
+    required: [true, 'File number (MCF ID) is required'],
     unique: true,
+    trim: true,
+    uppercase: true,
   },
   applicantName: {
     type: String,
@@ -49,8 +51,8 @@ const loanFileSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['New', 'Under Review', 'Under Process', 'Approved', 'Rejected', 'Completed'],
-    default: 'New',
+    enum: ['Login', 'Document Pending', 'Sanction', 'Disbursement'],
+    default: 'Login',
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
@@ -62,14 +64,8 @@ const loanFileSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// Generate random file number before saving
-loanFileSchema.pre('validate', function () {
-  if (!this.fileNumber) {
-    const prefix = 'LF';
-    const timestamp = Date.now().toString(36).toUpperCase();
-    const random = Math.random().toString(36).substring(2, 6).toUpperCase();
-    this.fileNumber = `${prefix}-${timestamp}-${random}`;
-  }
-});
+// Index fileNumber for fast searching
+loanFileSchema.index({ fileNumber: 1 });
+loanFileSchema.index({ updatedAt: -1 });
 
 module.exports = mongoose.model('LoanFile', loanFileSchema);

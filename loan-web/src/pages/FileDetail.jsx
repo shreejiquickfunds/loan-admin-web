@@ -6,7 +6,7 @@ import Timeline from '../components/Timeline';
 import StatusBadge from '../components/StatusBadge';
 import { FiArrowLeft, FiEdit3, FiUser, FiCalendar, FiHash, FiCreditCard, FiTrash2 } from 'react-icons/fi';
 
-const STATUSES = ['New', 'Under Review', 'Under Process', 'Approved', 'Rejected', 'Completed'];
+const STATUSES = ['Login', 'Document Pending', 'Sanction', 'Disbursement'];
 
 const FileDetail = () => {
   const { id } = useParams();
@@ -176,6 +176,7 @@ const FileDetail = () => {
                     id="status"
                     value={updateStatus}
                     onChange={(e) => setUpdateStatus(e.target.value)}
+                    className="select-themed"
                   >
                     {STATUSES.map((s) => (
                       <option key={s} value={s}>{s}</option>
@@ -183,13 +184,28 @@ const FileDetail = () => {
                   </select>
                 </div>
                 <div className="form-group flex-1">
-                  <label htmlFor="note">Note (optional)</label>
-                  <input
-                    type="text"
+                  <label htmlFor="note">
+                    Note (optional)
+                    <span style={{ marginLeft: 6, fontWeight: 400, fontSize: '0.7rem', color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}>
+                      — Enter for new line · Ctrl+Enter to submit
+                    </span>
+                  </label>
+                  <textarea
                     id="note"
                     value={statusNote}
                     onChange={(e) => setStatusNote(e.target.value)}
+                    onKeyDown={(e) => {
+                      // Ctrl+Enter (or Cmd+Enter) submits, plain Enter adds newline
+                      if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                        e.preventDefault();
+                        if (updateStatus !== file.status) {
+                          handleStatusUpdate(e);
+                        }
+                      }
+                    }}
                     placeholder="Add a note about this status change..."
+                    rows={3}
+                    style={{ resize: 'vertical', minHeight: '76px', lineHeight: '1.55' }}
                   />
                 </div>
               </div>

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../api/axios';
 import { useAuth } from '../context/AuthContext';
-import { FiFileText, FiClock, FiCheckCircle, FiXCircle, FiTrendingUp, FiAlertCircle } from 'react-icons/fi';
+import { FiFileText, FiLogIn, FiFileText as FiDoc, FiCheckCircle, FiDollarSign, FiClock } from 'react-icons/fi';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -19,10 +19,11 @@ const Dashboard = () => {
     try {
       const [statsRes, filesRes] = await Promise.all([
         API.get('/files/stats'),
-        API.get('/files?limit=5'),
+        API.get('/files', { params: { limit: 5 } }),
       ]);
       setStats(statsRes.data);
-      setRecentFiles(filesRes.data.slice(0, 5));
+      // Backend now returns { files, pagination }
+      setRecentFiles(filesRes.data.files ?? filesRes.data);
     } catch (err) {
       console.error('Failed to fetch dashboard data', err);
     } finally {
@@ -40,12 +41,11 @@ const Dashboard = () => {
   }
 
   const statCards = [
-    { label: 'Total Files', value: stats?.total || 0, icon: <FiFileText />, color: '#6366f1', bg: 'rgba(99, 102, 241, 0.1)' },
-    { label: 'New Files', value: stats?.newFiles || 0, icon: <FiAlertCircle />, color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.1)' },
-    { label: 'Under Process', value: stats?.underProcess || 0, icon: <FiClock />, color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.1)' },
-    { label: 'Approved', value: stats?.approved || 0, icon: <FiTrendingUp />, color: '#10b981', bg: 'rgba(16, 185, 129, 0.1)' },
-    { label: 'Completed', value: stats?.completed || 0, icon: <FiCheckCircle />, color: '#06b6d4', bg: 'rgba(6, 182, 212, 0.1)' },
-    { label: 'Rejected', value: stats?.rejected || 0, icon: <FiXCircle />, color: '#ef4444', bg: 'rgba(239, 68, 68, 0.1)' },
+    { label: 'Total Files',       value: stats?.total       || 0, icon: <FiFileText />,   color: '#6366f1', bg: 'rgba(99, 102, 241, 0.1)' },
+    { label: 'Login',             value: stats?.login       || 0, icon: <FiLogIn />,      color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.1)' },
+    { label: 'Document Pending',  value: stats?.docPending  || 0, icon: <FiClock />,      color: '#f59e0b', bg: 'rgba(245, 158, 11, 0.1)' },
+    { label: 'Sanction',          value: stats?.sanction    || 0, icon: <FiCheckCircle />,color: '#10b981', bg: 'rgba(16, 185, 129, 0.1)' },
+    { label: 'Disbursement',      value: stats?.disbursement|| 0, icon: <FiDollarSign />, color: '#e8b84b', bg: 'rgba(232, 184, 75, 0.1)'  },
   ];
 
   return (

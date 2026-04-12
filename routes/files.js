@@ -4,10 +4,10 @@ const { protect } = require('../middleware/auth');
 
 const router = express.Router();
 
-// GET /api/files - get all files with search & filter
+// GET /api/files - get files with search, filter & pagination
 router.get('/', protect, async (req, res) => {
   try {
-    const { search, status, assignedTo } = req.query;
+    const { search, status, assignedTo, page = 1, limit = 20 } = req.query;
 
     let query = {};
 
@@ -19,7 +19,7 @@ router.get('/', protect, async (req, res) => {
       ];
     }
 
-    // Filter by status
+    // Filter by status — 'All' returns everything (paginated)
     if (status && status !== 'All') {
       query.status = status;
     }
@@ -29,12 +29,29 @@ router.get('/', protect, async (req, res) => {
       query.assignedTo = assignedTo;
     }
 
-    const files = await LoanFile.find(query)
-      .populate('assignedTo', 'name email')
-      .populate('createdBy', 'name email')
-      .sort({ createdAt: -1 });
+    const pageNum  = Math.max(1, parseInt(page, 10));
+    const limitNum = Math.min(100, Math.max(1, parseInt(limit, 10)));
+    const skip     = (pageNum - 1) * limitNum;
 
-    res.json(files);
+    const [files, total] = await Promise.all([
+      LoanFile.find(query)
+        .populate('assignedTo', 'name email')
+        .populate('createdBy', 'name email')
+        .sort({ updatedAt: -1 })
+        .skip(skip)
+        .limit(limitNum),
+      LoanFile.countDocuments(query),
+    ]);
+
+    res.json({
+      files,
+      pagination: {
+        total,
+        page: pageNum,
+        limit: limitNum,
+        totalPages: Math.ceil(total / limitNum),
+      },
+    });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -43,14 +60,13 @@ router.get('/', protect, async (req, res) => {
 // GET /api/files/stats - get dashboard stats
 router.get('/stats', protect, async (req, res) => {
   try {
-    const total = await LoanFile.countDocuments();
-    const newFiles = await LoanFile.countDocuments({ status: 'New' });
-    const underProcess = await LoanFile.countDocuments({ status: { $in: ['Under Review', 'Under Process'] } });
-    const approved = await LoanFile.countDocuments({ status: 'Approved' });
-    const completed = await LoanFile.countDocuments({ status: 'Completed' });
-    const rejected = await LoanFile.countDocuments({ status: 'Rejected' });
+    const total           = await LoanFile.countDocuments();
+    const login           = await LoanFile.countDocuments({ status: 'Login' });
+    const docPending      = await LoanFile.countDocuments({ status: 'Document Pending' });
+    const sanction        = await LoanFile.countDocuments({ status: 'Sanction' });
+    const disbursement    = await LoanFile.countDocuments({ status: 'Disbursement' });
 
-    res.json({ total, newFiles, underProcess, approved, completed, rejected });
+    res.json({ total, login, docPending, sanction, disbursement });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
@@ -77,18 +93,29 @@ router.get('/:id', protect, async (req, res) => {
 // POST /api/files - create new file
 router.post('/', protect, async (req, res) => {
   try {
-    const { applicantName, loanType, assignedTo } = req.body;
+    const { fileNumber, applicantName, loanType, assignedTo } = req.body;
+
+    if (!fileNumber || !fileNumber.trim()) {
+      return res.status(400).json({ message: 'File number (MCF ID) is required' });
+    }
+
+    // Check uniqueness manually for a clear error message
+    const existing = await LoanFile.findOne({ fileNumber: fileNumber.trim().toUpperCase() });
+    if (existing) {
+      return res.status(409).json({ message: `File number "${fileNumber.trim().toUpperCase()}" already exists` });
+    }
 
     const file = new LoanFile({
+      fileNumber: fileNumber.trim().toUpperCase(),
       applicantName,
       loanType,
       assignedTo,
-      status: 'New',
+      status: 'Login',
       createdBy: req.user._id,
       timeline: [
         {
           action: 'File created',
-          toStatus: 'New',
+          toStatus: 'Login',
           performedBy: req.user._id,
           note: `File created by ${req.user.name}`,
         },
@@ -103,6 +130,9 @@ router.post('/', protect, async (req, res) => {
 
     res.status(201).json(populatedFile);
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(409).json({ message: 'File number already exists. Please use a unique MCF ID.' });
+    }
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
