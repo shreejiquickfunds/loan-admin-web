@@ -2,14 +2,13 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Sidebar from './components/Sidebar';
-import LandingPage from './pages/LandingPage';
+import ComingSoon from './pages/ComingSoon';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Files from './pages/Files';
 import FileDetail from './pages/FileDetail';
 import Users from './pages/Users';
 import { useAuth } from './context/AuthContext';
-import './landing.css';
 
 const AdminLayout = ({ children }) => {
   return (
@@ -27,8 +26,8 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          {/* Public Website */}
-          <Route path="/" element={<LandingPage />} />
+          {/* Public — Coming Soon */}
+          <Route path="/" element={<ComingSoon />} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<Login />} />
