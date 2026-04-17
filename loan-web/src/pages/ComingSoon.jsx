@@ -3,17 +3,21 @@ import { useState, useEffect, useRef } from 'react';
 /* ── Persist 72-hour target across reloads ── */
 const STORAGE_KEY = 'sjqf_launch_target';
 
+// function getLaunchTarget() {
+//   try {
+//     const stored = localStorage.getItem(STORAGE_KEY);
+//     if (stored) {
+//       const t = parseInt(stored, 10);
+//       if (!isNaN(t) && t > Date.now()) return t;
+//     }
+//   } catch (_) {}
+//   const target = Date.now() + 72 * 60 * 60 * 1000;
+//   try { localStorage.setItem(STORAGE_KEY, String(target)); } catch (_) {}
+//   return target;
+// }
 function getLaunchTarget() {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const t = parseInt(stored, 10);
-      if (!isNaN(t) && t > Date.now()) return t;
-    }
-  } catch (_) {}
-  const target = Date.now() + 72 * 60 * 60 * 1000;
-  try { localStorage.setItem(STORAGE_KEY, String(target)); } catch (_) {}
-  return target;
+  // Launching exactly April 20, 2026 at 12:00 AM IST
+  return new Date("2026-04-20T00:00:00+05:30").getTime();
 }
 
 function getTimeLeft(target) {
