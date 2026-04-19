@@ -65,7 +65,7 @@ const Timeline = ({ events }) => {
             {event.note && (
               <div className="timeline-note">
                 <FiMessageSquare />
-                <span>{event.note}</span>
+                <span style={{ whiteSpace: 'pre-wrap' }}>{event.note}</span>
               </div>
             )}
           </div>

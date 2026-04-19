@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: "https://loan-admin-web.vercel.app/api"
+  baseURL: `${import.meta.env.VITE_API_URL}/api`
 });
 
 // Attach token to every request

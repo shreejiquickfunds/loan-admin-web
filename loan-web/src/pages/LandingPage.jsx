@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
+import '../landing.css';
 
 /* ─────────────────────────────────────────────────────────────────────────────
    Scroll-animation CSS injected once — keeps landing.css untouched.
@@ -54,79 +55,79 @@ const ANIM_STYLE = `
    Static data (avoids re-creating on every render)
 ───────────────────────────────────────────────────────────────────────────── */
 const NAV_LINKS = [
-  { id: 'hero',        label: 'Home' },
-  { id: 'services',    label: 'Services' },
+  { id: 'hero', label: 'Home' },
+  { id: 'services', label: 'Services' },
   { id: 'how-we-work', label: 'How It Works' },
-  { id: 'about',       label: 'About Us' },
-  { id: 'careers',     label: 'Careers' },
+  { id: 'about', label: 'About Us' },
+  { id: 'careers', label: 'Careers' },
 ];
 
 const SERVICES = [
   {
-    img:   '/images/Project-loan.webp',
+    img: '/images/Project-loan.webp',
     title: 'Project Loan',
-    desc:  'Fund your construction or development projects with competitive rates and flexible repayment structures tailored to your timeline.',
+    desc: 'Fund your construction or development projects with competitive rates and flexible repayment structures tailored to your timeline.',
   },
   {
-    img:   '/images/Business-loan.webp',
+    img: '/images/Business-loan.webp',
     title: 'Business Loan',
-    desc:  'Accelerate growth with fast working capital, equipment financing, and expansion loans — minimal paperwork, maximum speed.',
+    desc: 'Accelerate growth with fast working capital, equipment financing, and expansion loans — minimal paperwork, maximum speed.',
   },
   {
-    img:   '/images/Home-loan.webp',
+    img: '/images/Home-loan.webp',
     title: 'Home Loan',
-    desc:  'Make your dream home a reality with affordable interest rates, long tenures, and disbursals as fast as 48 hours.',
+    desc: 'Make your dream home a reality with affordable interest rates, long tenures, and disbursals as fast as 48 hours.',
   },
   {
-    img:   '/images/Personal-loan.webp',
+    img: '/images/Personal-loan.webp',
     title: 'Personal Loan',
-    desc:  'Handle any personal expense — medical, travel, or wedding — with zero collateral and a quick fully-digital approval.',
+    desc: 'Handle any personal expense — medical, travel, or wedding — with zero collateral and a quick fully-digital approval.',
   },
 ];
 
 const STEPS = [
   {
-    img:     '/images/StepApplication.webp',
-    num:     '01',
-    title:   'Submit Application',
-    desc:    'Fill our simple online form in under 5 minutes. Basic personal and financial details are all we need — no branch visit required.',
+    img: '/images/StepApplication.webp',
+    num: '01',
+    title: 'Submit Application',
+    desc: 'Fill our simple online form in under 5 minutes. Basic personal and financial details are all we need — no branch visit required.',
     reverse: false,
   },
   {
-    img:     '/images/StepDocVerification.webp',
-    num:     '02',
-    title:   'Document Verification',
-    desc:    'Upload your ID, income proof, and bank statements digitally. Our experts verify everything within 24 hours via secure encrypted channels.',
+    img: '/images/StepDocVerification.webp',
+    num: '02',
+    title: 'Document Verification',
+    desc: 'Upload your ID, income proof, and bank statements digitally. Our experts verify everything within 24 hours via secure encrypted channels.',
     reverse: true,
   },
   {
-    img:     '/images/StepCredit.webp',
-    num:     '03',
-    title:   'Credit Assessment',
-    desc:    'We evaluate your credit profile using fair, transparent criteria — analyzing income stability, repayment capacity, and financial history.',
+    img: '/images/StepCredit.webp',
+    num: '03',
+    title: 'Credit Assessment',
+    desc: 'We evaluate your credit profile using fair, transparent criteria — analyzing income stability, repayment capacity, and financial history.',
     reverse: false,
   },
   {
-    img:     '/images/StepLoanApproval.webp',
-    num:     '04',
-    title:   'Loan Approved & Disbursed',
-    desc:    'Funds are credited directly to your bank account. Your digital agreement is fully transparent with all terms, EMIs, and schedules.',
+    img: '/images/StepLoanApproval.webp',
+    num: '04',
+    title: 'Loan Approved & Disbursed',
+    desc: 'Funds are credited directly to your bank account. Your digital agreement is fully transparent with all terms, EMIs, and schedules.',
     reverse: true,
   },
 ];
 
 const STATS = [
   { num: '5,000+', label: 'Happy Customers' },
-  { num: '₹50Cr+', label: 'Loans Disbursed' },
-  { num: '10+',    label: 'Years Experience' },
-  { num: '98%',    label: 'Approval Rate' },
+  { num: '₹300Cr+', label: 'Loans Disbursed' },
+  { num: '3+', label: 'Years Experience' },
+  { num: '99.99%', label: 'Approval Rate' },
 ];
 
 const CONTACT_INFO = [
-  { icon: '📍', title: 'Our Office',     detail: '533, 5th Floor, Mangalam Fun Square, Durga Nursery Road, Udaipur, Rajasthan' },
-  { icon: '📞', title: 'Call Us',        detail: '+91 6376650799' },
-  { icon: '✉️', title: 'Email Us',       detail: 'shreejiquickfunds6@gmail.com' },
-  { icon: '🕐', title: 'Working Hours',  detail: 'Mon – Sat: 9:00 AM – 6:00 PM' },
+  { icon: '📍', title: 'Our Office', detail: '533, 5th Floor, Mangalam Fun Square, Durga Nursery Road, Udaipur, Rajasthan' },
+  { icon: '📞', title: 'Call Us', detail: '+91 6376650799' },
+  { icon: '✉️', title: 'Email Us', detail: 'shreejiquickfunds6@gmail.com' },
+  { icon: '🕐', title: 'Working Hours', detail: 'Mon – Sat: 9:00 AM – 6:00 PM' },
 ];
 
 const LOAN_TYPES = ['Personal Loan', 'Business Loan', 'Project Loan', 'Home Loan', 'Vehicle Loan', 'Education Loan', 'Gold Loan'];
@@ -151,14 +152,14 @@ const ArrowIcon = ({ size = 15, style }) => (
 const LandingPage = () => {
   /* ── UI State ── */
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection]   = useState('hero');
-  const [navScrolled,   setNavScrolled]     = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
+  const [navScrolled, setNavScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   /* ── Form State ── */
-  const [isSubmitting,    setIsSubmitting]    = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [careerSubmitted, setCareerSubmitted] = useState(false);
-  const [resumeFile,      setResumeFile]      = useState(null);
+  const [resumeFile, setResumeFile] = useState(null);
 
   const [contactForm, setContactForm] = useState({
     name: '', phone: '', email: '', loanType: '', message: '',
@@ -184,7 +185,7 @@ const LandingPage = () => {
     const SECTION_IDS = ['hero', 'services', 'how-we-work', 'about', 'contact', 'careers'];
 
     const onScroll = () => {
-      const y    = window.scrollY;
+      const y = window.scrollY;
       const maxY = document.documentElement.scrollHeight - window.innerHeight;
 
       setScrollProgress(maxY > 0 ? (y / maxY) * 100 : 0);
@@ -294,9 +295,9 @@ const LandingPage = () => {
       Object.entries(careerForm).forEach(([k, v]) => formData.append(k, v));
       formData.append('resume', resumeFile);
 
-      const res = await fetch('https://loan-admin-web.vercel.app/api/career', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/career`, {
         method: 'POST',
-        body:   formData,
+        body: formData,
       });
 
       if (res.ok) {
@@ -325,16 +326,16 @@ const LandingPage = () => {
       <div
         aria-hidden="true"
         style={{
-          position:   'fixed',
-          top:        0,
-          left:       0,
-          height:     '2px',
-          width:      `${scrollProgress}%`,
-          zIndex:     9999,
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          height: '2px',
+          width: `${scrollProgress}%`,
+          zIndex: 9999,
           pointerEvents: 'none',
           background: 'linear-gradient(90deg, #091e44 0%, #e8b84b 60%, #d4971f 100%)',
           transition: 'width 0.12s linear',
-          boxShadow:  '0 0 8px rgba(232,184,75,0.5)',
+          boxShadow: '0 0 8px rgba(232,184,75,0.5)',
         }}
       />
 
@@ -401,7 +402,7 @@ const LandingPage = () => {
 
           {/* Left: copy */}
           <div className="hero-content">
-          
+
 
             <h1 className="hero-title">
               Fast &amp; Reliable<br />
@@ -473,7 +474,7 @@ const LandingPage = () => {
               src="/images/Hero.webp"
               alt="Premium banking and finance illustration"
               loading="eager"
-              width={540} 
+              width={540}
               height={480}
               style={{ maxWidth: '100%', height: 'auto', maxHeight: 500, objectFit: 'contain', position: 'relative', zIndex: 1 }}
             />
@@ -961,12 +962,12 @@ const LandingPage = () => {
           <div className="footer-links-group">
             <h4>Quick Links</h4>
             {[
-              ['hero',        'Home'],
-              ['services',    'Services'],
+              ['hero', 'Home'],
+              ['services', 'Services'],
               ['how-we-work', 'How It Works'],
-              ['about',       'About Us'],
-              ['contact',     'Contact Us'],
-              ['careers',     'Careers'],
+              ['about', 'About Us'],
+              ['contact', 'Contact Us'],
+              ['careers', 'Careers'],
             ].map(([id, label]) => (
               <a
                 key={id}

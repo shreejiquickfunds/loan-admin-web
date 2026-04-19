@@ -5,10 +5,9 @@ import {
 } from 'react-icons/fi';
 import { useState } from 'react';
 
-const Sidebar = () => {
+const Sidebar = ({ collapsed, setCollapsed }) => {
   const { user, logout, isAdmin } = useAuth();
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState(false);
 
   const handleLogout = () => {
     logout();

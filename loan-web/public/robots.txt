@@ -1,0 +1,40 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# robots.txt — Shree Ji QuickFunds
+# https://shreejiquickfunds.com
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Allow all search engines to crawl the public site
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/login
+Disallow: /admin/files
+Disallow: /admin/files/
+Disallow: /admin/users
+
+# Google
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+
+# Google Image Bot
+User-agent: Googlebot-Image
+Allow: /images/
+Allow: /favicon.svg
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+
+# Yandex
+User-agent: Yandex
+Allow: /
+Disallow: /admin
+
+# Sitemap location
+Sitemap: https://shreejiquickfunds.com/sitemap.xml
+
+# Host
+Host: https://shreejiquickfunds.com
