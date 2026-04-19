@@ -115,6 +115,8 @@ export default function ComingSoon() {
 
         {/* Contact */}
         <div className="cs2-contact">
+          <a href="tel:+918890120514"       className="cs2-link">+91 88901 20514</a>
+          <span aria-hidden="true">, &nbsp;</span>
           <a href="tel:+916376650799"       className="cs2-link">+91 63766 50799</a>
           <span aria-hidden="true">·</span>
           <a href="mailto:shreejiquickfunds6@gmail.com" className="cs2-link">shreejiquickfunds6@gmail.com</a>

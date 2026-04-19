@@ -22,33 +22,15 @@ const seedAdmin = async () => {
     // Create admin user
     const admin = await User.create({
       name: 'Admin',
-      email: 'admin@example.com',
-      password: 'admin123',
+      email: 'shreejiquickfunds6@gmail.com',
+      password: 'shreeji@6767',
       role: 'admin',
-    });
-
-    // Create a sample sub-admin
-    const subadmin = await User.create({
-      name: 'Rahul Sharma',
-      email: 'rahul@loanadmin.com',
-      password: 'rahul123',
-      role: 'subadmin',
-    });
-
-    const subadmin2 = await User.create({
-      name: 'Priya Patel',
-      email: 'priya@loanadmin.com',
-      password: 'priya123',
-      role: 'subadmin',
     });
 
     console.log('\n✅ Database seeded successfully!\n');
     console.log('Admin Account:');
-    console.log('  Email: admin@loanadmin.com');
-    console.log('  Password: admin123\n');
-    console.log('Sub-Admin Accounts:');
-    console.log('  Email: rahul@loanadmin.com | Password: rahul123');
-    console.log('  Email: priya@loanadmin.com | Password: priya123\n');
+    console.log('  Email: shreejiquickfunds6@gmail.com');
+    console.log('  Password: shreeji@6767\n');
 
     await mongoose.disconnect();
   } catch (error) {

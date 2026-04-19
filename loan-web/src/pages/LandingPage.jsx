@@ -125,7 +125,7 @@ const STATS = [
 
 const CONTACT_INFO = [
   { icon: '📍', title: 'Our Office', detail: '533, 5th Floor, Mangalam Fun Square, Durga Nursery Road, Udaipur, Rajasthan' },
-  { icon: '📞', title: 'Call Us', detail: '+91 6376650799' },
+  { icon: '📞', title: 'Call Us', detail: '+91 8890120514, +91 6376650799' },
   { icon: '✉️', title: 'Email Us', detail: 'shreejiquickfunds6@gmail.com' },
   { icon: '🕐', title: 'Working Hours', detail: 'Mon – Sat: 9:00 AM – 6:00 PM' },
 ];
@@ -277,7 +277,7 @@ const LandingPage = () => {
       `💰 Loan Type: ${contactForm.loanType}\n` +
       `📝 Message: ${contactForm.message || 'None'}`;
     window.open(
-      `https://api.whatsapp.com/send?phone=916376650799&text=${encodeURIComponent(text)}`,
+      `https://api.whatsapp.com/send?phone=918890120514&text=${encodeURIComponent(text)}`,
       '_blank',
       'noopener,noreferrer'
     );
@@ -999,7 +999,7 @@ const LandingPage = () => {
           <div className="footer-links-group">
             <h4>Get In Touch</h4>
             <p>📍 533, 5th Floor, Mangalam Fun Square, Durga Nursery Road, Udaipur, Rajasthan</p>
-            <p>📞 +91 6376650799</p>
+            <p>📞 +91 8890120514, +91 6376650799</p>
             <p>✉️ shreejiquickfunds6@gmail.com</p>
             <p>🕐 Mon – Sat: 9:00 AM – 6:00 PM</p>
           </div>
