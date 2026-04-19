@@ -471,7 +471,7 @@ const LandingPage = () => {
             </div> */}
 
             <img
-              src="/images/Hero.webp"
+              src="/home.png"
               alt="Premium banking and finance illustration"
               loading="eager"
               width={540}
