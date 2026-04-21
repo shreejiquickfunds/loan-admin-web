@@ -32,6 +32,7 @@ const FileTable = ({ files, loading, onDeleteFile }) => {
             <th>File Number</th>
             <th>Applicant Name</th>
             <th>Loan Type</th>
+            <th>Amount</th>
             <th>Assigned To</th>
             <th>Status</th>
             <th>Created</th>
@@ -54,6 +55,13 @@ const FileTable = ({ files, loading, onDeleteFile }) => {
               </td>
               <td>
                 <span className="loan-type-badge">{file.loanType}</span>
+              </td>
+              <td>
+                <span style={{ fontVariantNumeric: 'tabular-nums', fontWeight: 500 }}>
+                  {file.amount != null
+                    ? `₹${Number(file.amount).toLocaleString('en-IN')}`
+                    : <span style={{ color: 'var(--text-muted)' }}>—</span>}
+                </span>
               </td>
               <td>
                 <div className="assigned-cell">

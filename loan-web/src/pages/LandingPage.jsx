@@ -955,7 +955,7 @@ const LandingPage = () => {
             </span>
             <p className="footer-desc">
               Empowering financial freedom through fast, transparent, and trusted loan
-              solutions across Rajasthan — since 2014.
+              solutions across Rajasthan — since 2024.
             </p>
           </div>
 

@@ -18,6 +18,7 @@ const AddFileModal = ({ isOpen, onClose, onFileAdded }) => {
     fileNumber: '',
     applicantName: '',
     loanType: '',
+    amount: '',
     assignedTo: '',
   });
   const [subAdmins, setSubAdmins] = useState([]);
@@ -47,7 +48,7 @@ const AddFileModal = ({ isOpen, onClose, onFileAdded }) => {
     try {
       const { data } = await API.post('/files', formData);
       onFileAdded(data);
-      setFormData({ fileNumber: '', applicantName: '', loanType: '', assignedTo: '' });
+      setFormData({ fileNumber: '', applicantName: '', loanType: '', amount: '', assignedTo: '' });
       onClose();
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create file');
@@ -112,6 +113,22 @@ const AddFileModal = ({ isOpen, onClose, onFileAdded }) => {
                 <option key={type} value={type}>{type}</option>
               ))}
             </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="amount">Loan Amount (₹) <span style={{ fontWeight: 400, fontSize: '0.75rem', color: 'var(--text-muted)' }}>(optional)</span></label>
+            <input
+              type="number"
+              id="amount"
+              value={formData.amount}
+              onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
+              placeholder="e.g. 500000"
+              min="0"
+              step="1"
+            />
+            <small style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '2px' }}>
+              Enter the total loan amount in Indian Rupees (₹).
+            </small>
           </div>
 
           <div className="form-group">
