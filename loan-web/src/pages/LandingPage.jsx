@@ -594,24 +594,6 @@ const LandingPage = () => {
                 believe financial support should be accessible, fair, and genuinely human.
               </p>
 
-              <div className="about-founders anim-on-scroll">
-                <h4>The Visionaries Behind SJQF</h4>
-                <div className="founders-grid">
-                  <div className="founder-card">
-                    <div className="founder-info">
-                      <span className="founder-label">Founder</span>
-                      <span className="founder-name">Manish Menaria</span>
-                    </div>
-                  </div>
-                  <div className="founder-card">
-                    <div className="founder-info">
-                      <span className="founder-label">Founder</span>
-                      <span className="founder-name">Anil Menaria</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               <button
                 className="about-cta"
                 onClick={() => scrollTo('contact')}
@@ -621,17 +603,45 @@ const LandingPage = () => {
               </button>
             </div>
 
-            <div className="about-stats" role="list" aria-label="Key statistics">
-              {STATS.map(({ num, label }, i) => (
-                <div
-                  className={`about-stat-card anim-on-scroll anim-delay-${i + 1}`}
-                  key={label}
-                  role="listitem"
-                >
-                  <h3>{num}</h3>
-                  <p>{label}</p>
+            <div className="about-right-col">
+              <div className="about-directors anim-on-scroll">
+                <h4>Meet Our Directors</h4>
+                <div className="directors-grid">
+                  <div className="director-card">
+                    <div className="director-info">
+                      <span className="director-label">Director</span>
+                      <span className="director-name">Manish Menariya</span>
+                      <p className="director-quote">
+                        "Empowering dreams through accessible finance. We believe your 
+                        growth is the true measure of our success."
+                      </p>
+                    </div>
+                  </div>
+                  <div className="director-card">
+                    <div className="director-info">
+                      <span className="director-label">Director</span>
+                      <span className="director-name">Anil Menariya</span>
+                      <p className="director-quote">
+                        "Building trust with every loan. We don't just provide 
+                        financial support; we build lasting futures together."
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              ))}
+              </div>
+
+              <div className="about-stats" role="list" aria-label="Key statistics">
+                {STATS.map(({ num, label }, i) => (
+                  <div
+                    className={`about-stat-card anim-on-scroll anim-delay-${i + 1}`}
+                    key={label}
+                    role="listitem"
+                  >
+                    <h3>{num}</h3>
+                    <p>{label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
