@@ -44,6 +44,11 @@ const loanFileSchema = new mongoose.Schema({
     required: [true, 'Loan type is required'],
     enum: ['Home Loan', 'Personal Loan', 'Business Loan', 'Vehicle Loan', 'Education Loan', 'Gold Loan'],
   },
+  amount: {
+    type: Number,
+    default: null,
+    min: [0, 'Amount cannot be negative'],
+  },
   assignedTo: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

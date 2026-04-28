@@ -593,6 +593,25 @@ const LandingPage = () => {
                 lightning-fast approvals, and complete transparency at every step. We
                 believe financial support should be accessible, fair, and genuinely human.
               </p>
+
+              <div className="about-founders anim-on-scroll">
+                <h4>The Visionaries Behind SJQF</h4>
+                <div className="founders-grid">
+                  <div className="founder-card">
+                    <div className="founder-info">
+                      <span className="founder-label">Founder</span>
+                      <span className="founder-name">Manish Menaria</span>
+                    </div>
+                  </div>
+                  <div className="founder-card">
+                    <div className="founder-info">
+                      <span className="founder-label">Founder</span>
+                      <span className="founder-name">Anil Menaria</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <button
                 className="about-cta"
                 onClick={() => scrollTo('contact')}

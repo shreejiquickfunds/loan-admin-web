@@ -93,7 +93,7 @@ router.get('/:id', protect, async (req, res) => {
 // POST /api/files - create new file
 router.post('/', protect, async (req, res) => {
   try {
-    const { fileNumber, applicantName, loanType, assignedTo } = req.body;
+    const { fileNumber, applicantName, loanType, assignedTo, amount } = req.body;
 
     if (!fileNumber || !fileNumber.trim()) {
       return res.status(400).json({ message: 'File number (MCF ID) is required' });
@@ -109,6 +109,7 @@ router.post('/', protect, async (req, res) => {
       fileNumber: fileNumber.trim().toUpperCase(),
       applicantName,
       loanType,
+      amount: amount !== undefined && amount !== '' ? Number(amount) : null,
       assignedTo,
       status: 'Login',
       createdBy: req.user._id,
@@ -174,7 +175,7 @@ router.put('/:id/status', protect, async (req, res) => {
 // PUT /api/files/:id - update file details
 router.put('/:id', protect, async (req, res) => {
   try {
-    const { applicantName, loanType, assignedTo } = req.body;
+    const { applicantName, loanType, assignedTo, amount } = req.body;
     const file = await LoanFile.findById(req.params.id);
 
     if (!file) {
@@ -189,6 +190,10 @@ router.put('/:id', protect, async (req, res) => {
     if (loanType && loanType !== file.loanType) {
       changes.push(`Loan type changed from "${file.loanType}" to "${loanType}"`);
       file.loanType = loanType;
+    }
+    if (amount !== undefined && amount !== '' && Number(amount) !== file.amount) {
+      changes.push(`Loan amount changed to ₹${Number(amount).toLocaleString('en-IN')}`);
+      file.amount = Number(amount);
     }
     if (assignedTo && assignedTo.toString() !== file.assignedTo.toString()) {
       changes.push('File reassigned');

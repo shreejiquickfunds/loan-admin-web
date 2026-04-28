@@ -924,6 +924,80 @@
   box-shadow: 0 10px 32px rgba(9, 30, 68, 0.26);
 }
 
+/* Founders */
+.about-founders {
+  margin: 32px 0;
+}
+
+.about-founders h4 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gold-400);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;
+}
+
+.about-founders h4::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: var(--navy-700);
+  opacity: 0.3;
+}
+
+.founders-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.founder-card {
+  background: var(--bg-white);
+  padding: 16px 24px;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border-pale);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--t-fast);
+  display: flex;
+  align-items: center;
+  min-width: 200px;
+}
+
+.founder-card:hover {
+  border-color: var(--gold-300);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  background: var(--bg-ivory);
+}
+
+.founder-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.founder-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.founder-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--navy-800);
+  font-family: var(--font-serif);
+}
+
 /* Stats */
 .about-stats {
   display: grid;
